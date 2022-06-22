@@ -4,6 +4,9 @@
 
     Source file
     contains the actual code
+    
+    this file and read_CO2.h must be saved under the 
+    Arduino>libraries folder in a folder entitled "read_CO2" 
 */
 
 #include "Arduino.h"
