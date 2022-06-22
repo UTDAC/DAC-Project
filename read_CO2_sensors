@@ -1,12 +1,12 @@
 /* 
 Main Arduino code for I2C communication with the senseair K30 fr CO2 sensor(s)
-*\
+*/
 
 /*
 #include "LocalFile.h" // double quotes: the folder of this file (DAC_CO2_sensor) is searched for specified file
                        // then the libraries path is searched if not found
 #include <LocalFile.h> // the libraries paths searched for the file
-*\
+*/
 #include <read_CO2.h> // CO2 Reading library
 
 /* 
@@ -14,7 +14,7 @@ Each CO2 device needs a unique address
 to change an I2C address:
   in the code, specify unique I2C address for each IC/device
   per device: write value to EEPROM and power down, then power it up again
-*\
+*/
 const byte co2OneAddress = 0x68; //??? 1
 // const byte co2TwoAddress = 0x69; // ???
 
