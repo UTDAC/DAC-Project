@@ -22,8 +22,8 @@ int sensor;
 int co2_1;
 // int co2_2;
 
-int SDA = 20; // Arduino mega I2C SDA pin
-int SCL = 21; // Arduino mega I2C SCL pin
+int sda = 20; // Arduino mega I2C SDA pin
+int scl = 21; // Arduino mega I2C SCL pin
 
 // Define the calls within the .h module for getting CO2 data from each device
 read_CO2 READ_CO2_1 = read_CO2(co2OneAddress);
@@ -36,11 +36,11 @@ void setup() {
 
 // void function returns no value, int returns an integer ppm
 int read_co2_1(){
-  SCL = READ_CO2_1.readCO2(SDA);
-  while (SCL != 0){ // error check, repeats until correct
-    SCL = READ_CO2_1.readCO2(SDA);
+  scl = READ_CO2_1.readCO2(sda);
+  while (scl != 0){ // error check, repeats until correct
+    scl = READ_CO2_1.readCO2(sda);
   }
-  return SDA
+  return sda;
 }
 
 void loop() {
