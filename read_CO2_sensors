@@ -1,0 +1,49 @@
+/* 
+Main Arduino code for I2C communication with the senseair K30 fr CO2 sensor(s)
+*\
+
+/*
+#include "LocalFile.h" // double quotes: the folder of this file (DAC_CO2_sensor) is searched for specified file
+                       // then the libraries path is searched if not found
+#include <LocalFile.h> // the libraries paths searched for the file
+*\
+#include <read_CO2.h> // CO2 Reading library
+
+/* 
+Each CO2 device needs a unique address
+to change an I2C address:
+  in the code, specify unique I2C address for each IC/device
+  per device: write value to EEPROM and power down, then power it up again
+*\
+const byte co2OneAddress = 0x68; //??? 1
+// const byte co2TwoAddress = 0x69; // ???
+
+int sensor;
+int co2_1;
+// int co2_2;
+
+int SDA = 20; // Arduino mega I2C SDA pin
+int SCL = 21; // Arduino mega I2C SCL pin
+
+// Define the calls within the .h module for getting CO2 data from each device
+read_CO2 READ_CO2_1 = read_CO2(co2OneAddress);
+// read_CO2 READ_CO2_2 = read_CO2(co2TwoAddress);
+
+// setup code, runs once at beginning
+void setup() {
+  Serial.begin(9600); // baud rate 9600: may be different for diff computers
+}
+
+// void function returns no value, int returns an integer ppm
+int read_co2_1(){
+  SCL = READ_CO2_1.readCO2(SDA);
+  while (SCL != 0){ // error check, repeats until correct
+    SCL = READ_CO2_1.readCO2(SDA);
+  }
+  return SDA
+}
+
+void loop() {
+  co2_1 = read_co2_1();
+  Serial.println(co2_1);
+  delay(100);
