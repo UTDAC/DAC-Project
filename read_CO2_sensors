@@ -47,3 +47,4 @@ void loop() {
   co2_1 = read_co2_1();
   Serial.println(co2_1);
   delay(100);
+}
