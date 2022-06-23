@@ -15,19 +15,18 @@ to change an I2C address:
   in the code, specify unique I2C address for each IC/device
   per device: write value to EEPROM and power down, then power it up again
 */
-const byte co2OneAddress = 0x68; //??? 1
-// const byte co2TwoAddress = 0x69; // ???
+const byte co2OneAddress = 0x68; // default/standard
+const byte co2TwoAddress = 0x69; // ??
 
-int sensor;
-int co2_1;
-// int co2_2;
+int co2_1 = 0;
+int rc_1 = 1;
 
-int sda = 20; // Arduino mega I2C SDA pin
-int scl = 21; // Arduino mega I2C SCL pin
+int co2_2 = 0;
+int rc_2 = 1;
 
 // Define the calls within the .h module for getting CO2 data from each device
 read_CO2 READ_CO2_1 = read_CO2(co2OneAddress);
-// read_CO2 READ_CO2_2 = read_CO2(co2TwoAddress);
+read_CO2 READ_CO2_2 = read_CO2(co2TwoAddress);
 
 // setup code, runs once at beginning
 void setup() {
@@ -36,15 +35,32 @@ void setup() {
 
 // void function returns no value, int returns an integer ppm
 int read_co2_1(){
-  scl = READ_CO2_1.readCO2(sda);
-  while (scl != 0){ // error check, repeats until correct
-    scl = READ_CO2_1.readCO2(sda);
+  rc_1 = READ_CO2_1.readCO2(co2_1);
+  while (rc_1 != 0){ // error check, repeats until correct
+    rc_1 = READ_CO2_1.readCO2(co2_1);
   }
-  return sda;
+  return co2_1;
+}
+
+int read_co2_2(){
+  rc_2 = READ_CO2_1.readCO2(co2_2);
+  while (rc_2 != 0){ // error check, repeats until correct
+    rc_2 = READ_CO2_1.readCO2(co2_2);
+  }
+  return co2_2;
 }
 
 void loop() {
   co2_1 = read_co2_1();
-  Serial.println(co2_1);
+  Serial.print("CO2 1 reading: ");
+  Serial.print(co2_1);
+  Serial.println(" ppm");
+  /*
+  co2_2 = read_co2_2();
+  Serial.print("CO2 2 reading: ");
+  Serial.print(co2_2);
+  Serial.println(" ppm");
+  Serial.println();
+  */
   delay(100);
 }
