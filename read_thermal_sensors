@@ -35,6 +35,8 @@ double TempC_1;
 double TempC_2;
 double TempC_3;
 
+int count;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -42,49 +44,80 @@ void setup() {
 
 double read_temp_1(){
   TempC_1 = thermocouple1.readCelsius();
-  if (!isnan(TempC_1)){
-    return TempC_1;
+  count = 0;
+  while (isnan(TempC_1) && (count <= 10)){
+    TempC_1 = thermocouple1.readCelsius();
+    count++;
+  }
+  if (count == 11){
+    return 0
   }
   else {
-    return read_temp_1();
+    return TempC_1;
   }
 }
 
 double read_temp_2(){
   TempC_2 = thermocouple2.readCelsius();
-  if (!isnan(TempC_2)){
-    return TempC_2;
+  count = 0;
+  while ((isnan(TempC_2)) && (count <= 10)){
+    TempC_2 = thermocouple2.readCelsius();
+    count++;
+  }
+  if (count == 11){
+    return 0
   }
   else {
-    return read_temp_2();
+    return TempC_2;
   }
 }
 
 double read_temp_3(){
   TempC_3 = thermocouple3.readCelsius();
-  if (!isnan(TempC_3)){
-    return TempC_3;
+  count = 0;
+  while ((isnan(TempC_3)) && (count <= 10)){
+    TempC_3 = thermocouple3.readCelsius();
+    count++;
+  }
+  if (count == 11){
+    return 0
   }
   else {
-    return read_temp_3();
+    return TempC_3;
   }
 }
 
 void loop() {
-  TempC_1 = read_temp_1();
-  Serial.print("Temp 1: ");
-  Serial.print(TempC_1);
-  Serial.println(" C");
+  TTempC_1 = read_temp_1();
+  if (TempC_1 != 0){
+    Serial.print("Temp 1: ");
+    Serial.print(TempC_1);
+    Serial.println(" C");
+  }
+  else{
+    Serial.println("ERROR with Thermocouple 1");
+  }
+  
   /*
   TempC_2 = read_temp_2();
-  Serial.print("Temp 2: ");
-  Serial.print(TempC_2);
-  Serial.println(" C");
+  if (TempC_2 != 0){
+    Serial.print("Temp 2: ");
+    Serial.print(TempC_2);
+    Serial.println(" C");
+  }
+  else{
+    Serial.println("ERROR with Thermocouple 2");
+  }
   
-  TempC_1 = read_temp_3();
-  Serial.print("Temp 3: ");
-  Serial.print(TempC_3);
-  Serial.println(" C");
+  TempC_3 = read_temp_3();
+  if (TempC_3 != 0){
+    Serial.print("Temp 3: ");
+    Serial.print(TempC_3);
+    Serial.println(" C");
+  }
+  else{
+    Serial.println("ERROR with Thermocouple 3");
+  }
   
   Serial.println();
    */
