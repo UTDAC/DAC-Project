@@ -1,0 +1,95 @@
+/*
+Code interfacing the Adafruit Thermocouple Sensor w/MAX31855K
+
+https://learn.adafruit.com/thermocouple/arduino-code
+
+Ensure necessary libraries installed:
+Tools-> Manage Libraries
+Search for (top right) "Adafruit MAX31855 library" & install latest version
+Install any other libraries necessary for use
+*/
+
+#include <SPI.h>
+#include "Adafruit_MAX31855.h"
+
+// Creating a thermocouple instance with software SPI on any three
+// digital IO pins.
+#define MAXDO_1   22
+#define MAXCS_1   23
+#define MAXCLK_1  24
+
+#define MAXDO_2   25
+#define MAXCS_2   26
+#define MAXCLK_2  27
+
+#define MAXDO_3   28
+#define MAXCS_3   29
+#define MAXCLK_3  30
+
+// Initialize the Thermocouples
+Adafruit_MAX31855 thermocouple1(MAXCLK_1, MAXCS_1, MAXDO_1);
+Adafruit_MAX31855 thermocouple2(MAXCLK_2, MAXCS_2, MAXDO_2);
+Adafruit_MAX31855 thermocouple3(MAXCLK_3, MAXCS_3, MAXDO_3);
+
+double TempC_1;
+double TempC_2;
+double TempC_3;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+}
+
+double read_temp_1(){
+  TempC_1 = thermocouple1.readCelsius();
+  if (!isnan(TempC_1)){
+    return TempC_1;
+  }
+  else {
+    return read_temp_1();
+  }
+}
+
+double read_temp_2(){
+  TempC_2 = thermocouple2.readCelsius();
+  if (!isnan(TempC_2)){
+    return TempC_2;
+  }
+  else {
+    return read_temp_2();
+  }
+}
+
+double read_temp_3(){
+  TempC_3 = thermocouple3.readCelsius();
+  if (!isnan(TempC_3)){
+    return TempC_3;
+  }
+  else {
+    return read_temp_3();
+  }
+}
+
+void loop() {
+  TempC_1 = read_temp_1();
+  Serial.print("Temp 1: ");
+  Serial.print(TempC_1);
+  Serial.println(" C");
+  /*
+  TempC_2 = read_temp_2();
+  Serial.print("Temp 2: ");
+  Serial.print(TempC_2);
+  Serial.println(" C");
+  
+  TempC_1 = read_temp_3();
+  Serial.print("Temp 3: ");
+  Serial.print(TempC_3);
+  Serial.println(" C");
+  
+  Serial.println();
+   */
+  delay(100);
+  
+
+
+}
