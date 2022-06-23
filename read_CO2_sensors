@@ -24,6 +24,8 @@ int rc_1 = 1;
 int co2_2 = 0;
 int rc_2 = 1;
 
+int count;
+
 // Define the calls within the .h module for getting CO2 data from each device
 read_CO2 READ_CO2_1 = read_CO2(co2OneAddress);
 read_CO2 READ_CO2_2 = read_CO2(co2TwoAddress);
@@ -36,18 +38,32 @@ void setup() {
 // void function returns no value, int returns an integer ppm
 int read_co2_1(){
   rc_1 = READ_CO2_1.readCO2(co2_1);
-  while (rc_1 != 0){ // error check, repeats until correct
+  count = 0;
+  while ((rc_1 != 0) && (count <= 5)){ // error check, repeats until correct
     rc_1 = READ_CO2_1.readCO2(co2_1);
+    count++;
   }
-  return co2_1;
+  if (count == 6){
+    return 0
+  }
+  else {
+    return co2_1;
+  }
 }
 
 int read_co2_2(){
   rc_2 = READ_CO2_1.readCO2(co2_2);
-  while (rc_2 != 0){ // error check, repeats until correct
+  count = 0;
+  while ((rc_2 != 0) && (count <= 5)){ // error check, repeats until correct
     rc_2 = READ_CO2_1.readCO2(co2_2);
+    count++;
   }
-  return co2_2;
+  if (count == 6){
+    return 0
+  }
+  else {
+    return co2_2;
+  }
 }
 
 void loop() {
@@ -61,6 +77,26 @@ void loop() {
   Serial.print(co2_2);
   Serial.println(" ppm");
   Serial.println();
+  */
+  delay(100);co2_1 = read_co2_1();
+  if (co2_1 != 0){
+    Serial.print("CO2 1 reading: ");
+    Serial.print(co2_1);
+    Serial.println(" ppm");
+  }
+  else{
+    Serial.println("ERROR with CO2 Sensor 1");
+  }
+  
+  /*
+  co2_2 = read_co2_2();
+  if (co2_2 != 0){
+    Serial.print("CO2 2 reading: ");
+    Serial.print(co2_1);
+    Serial.println(" ppm");
+  }
+  else{
+    Serial.println("ERROR with CO2 Sensor 2");
   */
   delay(100);
 }
