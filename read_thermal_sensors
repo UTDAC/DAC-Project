@@ -50,7 +50,7 @@ double read_temp_1(){
     count++;
   }
   if (count == 11){
-    return 0
+    return 0;
   }
   else {
     return TempC_1;
@@ -65,7 +65,7 @@ double read_temp_2(){
     count++;
   }
   if (count == 11){
-    return 0
+    return 0;
   }
   else {
     return TempC_2;
@@ -80,7 +80,7 @@ double read_temp_3(){
     count++;
   }
   if (count == 11){
-    return 0
+    return 0;
   }
   else {
     return TempC_3;
